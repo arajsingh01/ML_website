@@ -4,7 +4,8 @@ import base64
 import pickle
 import pandas as pd
 import io
-from NBA_Predictor import predict_trade 
+from NBA_Predictor import predict_trade
+from Recruitment_predictor import prepare_input_data, predict_hiring_decision
 
 # Load CSS
 def load_css(file_name):
@@ -36,7 +37,7 @@ st.sidebar.markdown(
 # Create a dropdown for selecting a model
 model_choice = st.sidebar.selectbox(
     "Choose a Machine Learning Model",
-    ("NBA Player Trade Examiner", "Model 2", "Model 3")
+    ("NBA Player Trade Examiner", "Recruitment Predictor", "Model 3")
 )
 
 # Function to load the model
@@ -70,14 +71,28 @@ if model_choice == "NBA Player Trade Examiner":
         else:
             st.write("Please enter both player names.")
             
-elif model_choice == "Model 2":
-    st.header("Model 2: Example Name")
-    feature_a = st.text_input("Feature A:")
-    feature_b = st.text_input("Feature B:")
-    if st.button("Predict"):
-        model = load_model("model2")
-        prediction = model.predict([[feature_a, feature_b]])
-        st.write("Prediction:", prediction)
+elif model_choice == "Recruitment Predictor":
+    st.title("Recruitment Predictor")
+    # Collect input data from the user
+    age = st.number_input("Age", min_value=20, max_value=50, step=1)
+    gender = st.selectbox("Gender", options=[0, 1], format_func=lambda x: "Male" if x == 0 else "Female")
+    education_level = st.selectbox("Education Level", options=[1, 2, 3, 4], format_func=lambda x: {1: "Bachelor's (Type 1)", 2: "Bachelor's (Type 2)", 3: "Master's", 4: "PhD"}[x])
+    experience_years = st.number_input("Experience Years", min_value=0, max_value=15, step=1)
+    previous_companies = st.number_input("Previous Companies Worked", min_value=1, max_value=5, step=1)
+    distance_from_company = st.number_input("Distance From Company (km)", min_value=1.0, max_value=50.0, step=0.1)
+    interview_score = st.number_input("Interview Score", min_value=0, max_value=100, step=1)
+    skill_score = st.number_input("Skill Score", min_value=0, max_value=100, step=1)
+    personality_score = st.number_input("Personality Score", min_value=0, max_value=100, step=1)
+    recruitment_strategy = st.selectbox("Recruitment Strategy", options=[1, 2, 3], format_func=lambda x: {1: "Aggressive", 2: "Moderate", 3: "Conservative"}[x])
+
+    if st.button("Predict Hiring Decision"):
+        input_data = prepare_input_data(age, gender, education_level, experience_years, previous_companies, distance_from_company, interview_score, skill_score, personality_score, recruitment_strategy)
+        prediction = predict_hiring_decision(input_data)
+    
+        if prediction[0] == 1:
+            st.success("The candidate is likely to be hired.")
+        else:
+            st.warning("The candidate is not likely to be hired.")
 
 elif model_choice == "Model 3":
     st.header("Model 3: Example Name")
