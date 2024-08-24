@@ -1,7 +1,6 @@
 # model_integration.py
 import pickle
 import pandas as pd
-import xgboost
 
 # Function to load the model
 def load_model():
