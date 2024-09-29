@@ -1,11 +1,12 @@
 # model_integration.py
-import pickle
 import pandas as pd
 
 # Function to load the model
+import joblib
+
 def load_model():
-    with open('Recruitment/model.pkl', 'rb') as file:
-        model = pickle.load(file)
+    # Load the model using joblib
+    model = joblib.load('Recruitment/model.joblib')  # Ensure that the file extension is .joblib
     return model
 
 def prepare_input_data(age, gender, education_level, experience_years, previous_companies, distance_from_company, interview_score, skill_score, personality_score, recruitment_strategy):

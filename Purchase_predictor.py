@@ -1,11 +1,14 @@
-import pickle
 import numpy as np
 
+import joblib
+
 def load_model_and_scaler():
-    with open('Purchase_iphone/model_pickle.pkl', 'rb') as model_file:
-        model = pickle.load(model_file)
-    with open('Purchase_iphone/scaler.pkl', 'rb') as scaler_file:
-        scaler = pickle.load(scaler_file)
+    # Load the model using joblib
+    model = joblib.load('Purchase_iphone/model_joblib.joblib')
+    
+    # Load the scaler using joblib
+    scaler = joblib.load('Purchase_iphone/scaler_joblib.joblib')
+    
     return model, scaler
 
 def predict_purchase(gender, age, salary):

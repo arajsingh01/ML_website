@@ -2,4 +2,3 @@ scikit-learn
 joblib
 pandas
 numpy
-pickle

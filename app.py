@@ -1,7 +1,6 @@
 import streamlit as st
 from PIL import Image
 import base64
-import pickle
 import pandas as pd
 import io
 from NBA_Predictor import predict_trade
