@@ -155,5 +155,83 @@ elif category == "Data Analysis":
 
     dataset_choice = st.sidebar.selectbox(
         "Choose a dataset",
-        ("Spotify",)
+        ("Spotify","NBA Player Stats")
     )
+
+    if dataset_choice == "Spotify":
+        # Load and clean the Spotify dataset
+        @st.cache_data
+        def load_data():
+            df = pd.read_csv('Spotify_songs/Most Streamed Spotify Songs 2024.csv', encoding='ISO-8859-1')
+            # Convert columns to numeric
+            columns_to_convert = ['Spotify Streams', 'Spotify Playlist Count', 'Spotify Playlist Reach',
+                                  'YouTube Views', 'YouTube Likes', 'TikTok Posts', 'TikTok Likes',
+                                  'TikTok Views', 'YouTube Playlist Reach', 'AirPlay Spins', 'SiriusXM Spins',
+                                  'Pandora Streams', 'Pandora Track Stations', 'Soundcloud Streams', 'Shazam Counts']
+            for column in columns_to_convert:
+                df[column] = df[column].str.replace(',', '').astype(float)
+            # Drop TIDAL Popularity column
+            df = df.drop(columns=['TIDAL Popularity'])
+            return df
+
+        # Streamlit app setup
+        st.title('Spotify Top Streamed Songs (2024)')
+        df = load_data()
+
+        # Display data and basic statistics
+        st.header('Dataset Overview')
+        st.write(df.head())
+
+        # Top 10 Songs by Spotify Streams
+        st.header('Top 10 Songs by Spotify Streams')
+        top_10_songs = df[['Track', 'Artist', 'Spotify Streams']].sort_values(by='Spotify Streams', ascending=False).head(10)
+        st.write(top_10_songs)
+
+        # Correlation Analysis
+        st.header('Correlation between Streams, Popularity, and Playlist Count')
+        correlation_data = df[['Spotify Streams', 'Spotify Popularity', 'Spotify Playlist Count']].corr()
+        st.write(correlation_data)
+
+        # YouTube Views vs TikTok Engagement
+        st.header('YouTube Views vs TikTok Engagement')
+        st.write(df[['YouTube Views', 'TikTok Views', 'TikTok Likes']].describe())
+
+        # Visualizations
+        st.header('Visualizations')
+        st.bar_chart(top_10_songs.set_index('Track')['Spotify Streams'])
+
+        # Closing Remarks
+        st.write("Data Source: Most Streamed Spotify Songs of 2024")
+    
+    elif dataset_choice == "NBA Player Stats":
+        # Load NBA dataset
+        @st.cache_data
+        def load_nba_data():
+            return pd.read_csv('NBAFiles/final_data.csv')
+        
+        st.title('NBA Player Performance Analysis')
+        df = load_nba_data()
+
+        # Show dataset overview
+        st.header('Dataset Overview')
+        st.write(df.head())
+
+        # Basic statistics
+        st.header('Player Statistics Overview')
+        st.write(df.describe())
+
+        # Top 10 players by points
+        st.header('Top 10 Players by Points')
+        top_10_players_pts = df[['PLAYER_NAME', 'PTS']].sort_values(by='PTS', ascending=False).head(10)
+        st.write(top_10_players_pts)
+
+        # Correlation between key stats
+        st.header('Correlation between Points, Assists, and Rebounds')
+        correlation_data = df[['PTS', 'AST', 'REB']].corr()
+        st.write(correlation_data)
+
+        # Visualize top players
+        st.header('Top Players Visualization')
+        st.bar_chart(top_10_players_pts.set_index('PLAYER_NAME')['PTS'])
+
+        st.write("Data Source: NBA Player Stats")
