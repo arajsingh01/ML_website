@@ -9,23 +9,18 @@ from Recruitment_predictor import prepare_input_data, predict_hiring_decision
 from Purchase_predictor import predict_purchase
 from social_media import predict_impact
 
-# Load CSS
 def load_css(file_name):
     with open(file_name) as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-# Load the CSS file
 load_css("style.css")
 
-# Sidebar with logo and name side by side
 logo = Image.open("images/logo.jpeg")
 
-# Convert logo to base64
 buffered = io.BytesIO()
 logo.save(buffered, format="PNG")
 img_str = base64.b64encode(buffered.getvalue()).decode()
 
-# Display the logo and name side by side
 st.sidebar.markdown(
     f"""
     <div class="logo-container">
@@ -36,23 +31,19 @@ st.sidebar.markdown(
     unsafe_allow_html=True
 )
 
-# Add a dropdown for category selection
 category = st.sidebar.selectbox(
     "Select a Category",
     ("ML Model", "Data Analysis")
 )
 
-# ML Models section
 if category == "ML Model":
-    # Create a dropdown for selecting a model under ML Model category
     model_choice = st.sidebar.selectbox(
         "Choose a Machine Learning Model",
         ("NBA Player Trade Examiner", "Recruitment Predictor", "Purchase Predictor", "Social Media Impact Predictor")
     )
 
-    # Handle predictions based on selected model
     if model_choice == "NBA Player Trade Examiner":
-        data = pd.read_csv("NBAFiles/final_data.csv")  # Replace with your actual dataset
+        data = pd.read_csv("NBAFiles/final_data.csv")
         st.title("NBA Player Trade Examiner")
         player1_name = st.text_input("Enter the name of Player 1:")
         player2_name = st.text_input("Enter the name of Player 2:")
@@ -112,7 +103,6 @@ if category == "ML Model":
     elif model_choice == "Social Media Impact Predictor":
         st.title("Social Media Impact Prediction")
         
-        # Collect input data for social media impact features
         total_time_spent = st.slider("Total Time Spent (hours)", min_value=0, max_value=24, step=1)
         num_sessions = st.slider("Number of Sessions", min_value=1, max_value=100, step=1)
         engagement = st.slider("Engagement Level", min_value=0, max_value=100, step=1)
@@ -122,7 +112,6 @@ if category == "ML Model":
         self_control = st.slider("Self Control", min_value=0, max_value=100, step=1)
         addiction_level = st.slider("Addiction Level", min_value=0, max_value=100, step=1)
 
-        # Predict button
         if st.button("Predict Impact"):
             input_data = pd.DataFrame({
                 'Total Time Spent': [total_time_spent],
@@ -135,14 +124,11 @@ if category == "ML Model":
                 'Addiction Level': [addiction_level]
             })
 
-            # Call the predict_impact function to get the prediction
             prediction = predict_impact(input_data)
             
-            # Load images for both outcomes
-            bad_impact_image = Image.open("DarksideOfSocialMedia/addicted to socialmedia.jpg")  # Replace with your image path
-            no_impact_image = Image.open("DarksideOfSocialMedia/healthy mindset.jpg")    # Replace with your image path
+            bad_impact_image = Image.open("DarksideOfSocialMedia/addicted to socialmedia.jpg")
+            no_impact_image = Image.open("DarksideOfSocialMedia/healthy mindset.jpg")
 
-            # Output the result based on the prediction value with images
             if prediction[0] == 1:
                 st.image(bad_impact_image, use_column_width=True)
                 st.warning("You are badly impacted by social media.")
@@ -150,7 +136,6 @@ if category == "ML Model":
                 st.image(no_impact_image, use_column_width=True)
                 st.success("You are not badly impacted by social media.")
 
-# Data Analysis section
 elif category == "Data Analysis":
 
     dataset_choice = st.sidebar.selectbox(
@@ -159,52 +144,41 @@ elif category == "Data Analysis":
     )
 
     if dataset_choice == "Spotify":
-        # Load and clean the Spotify dataset
         @st.cache_data
         def load_data():
             df = pd.read_csv('Spotify_songs/Most Streamed Spotify Songs 2024.csv', encoding='ISO-8859-1')
-            # Convert columns to numeric
             columns_to_convert = ['Spotify Streams', 'Spotify Playlist Count', 'Spotify Playlist Reach',
                                   'YouTube Views', 'YouTube Likes', 'TikTok Posts', 'TikTok Likes',
                                   'TikTok Views', 'YouTube Playlist Reach', 'AirPlay Spins', 'SiriusXM Spins',
                                   'Pandora Streams', 'Pandora Track Stations', 'Soundcloud Streams', 'Shazam Counts']
             for column in columns_to_convert:
                 df[column] = df[column].str.replace(',', '').astype(float)
-            # Drop TIDAL Popularity column
             df = df.drop(columns=['TIDAL Popularity'])
             return df
 
-        # Streamlit app setup
         st.title('Spotify Top Streamed Songs (2024)')
         df = load_data()
 
-        # Display data and basic statistics
         st.header('Dataset Overview')
         st.write(df.head())
 
-        # Top 10 Songs by Spotify Streams
         st.header('Top 10 Songs by Spotify Streams')
         top_10_songs = df[['Track', 'Artist', 'Spotify Streams']].sort_values(by='Spotify Streams', ascending=False).head(10)
         st.write(top_10_songs)
 
-        # Correlation Analysis
         st.header('Correlation between Streams, Popularity, and Playlist Count')
         correlation_data = df[['Spotify Streams', 'Spotify Popularity', 'Spotify Playlist Count']].corr()
         st.write(correlation_data)
 
-        # YouTube Views vs TikTok Engagement
         st.header('YouTube Views vs TikTok Engagement')
         st.write(df[['YouTube Views', 'TikTok Views', 'TikTok Likes']].describe())
 
-        # Visualizations
         st.header('Visualizations')
         st.bar_chart(top_10_songs.set_index('Track')['Spotify Streams'])
 
-        # Closing Remarks
         st.write("Data Source: Most Streamed Spotify Songs of 2024")
     
     elif dataset_choice == "NBA Player Stats":
-        # Load NBA dataset
         @st.cache_data
         def load_nba_data():
             return pd.read_csv('NBAFiles/final_data.csv')
@@ -212,25 +186,20 @@ elif category == "Data Analysis":
         st.title('NBA Player Performance Analysis')
         df = load_nba_data()
 
-        # Show dataset overview
         st.header('Dataset Overview')
         st.write(df.head())
 
-        # Basic statistics
         st.header('Player Statistics Overview')
         st.write(df.describe())
 
-        # Top 10 players by points
         st.header('Top 10 Players by Points')
         top_10_players_pts = df[['PLAYER_NAME', 'PTS']].sort_values(by='PTS', ascending=False).head(10)
         st.write(top_10_players_pts)
 
-        # Correlation between key stats
         st.header('Correlation between Points, Assists, and Rebounds')
         correlation_data = df[['PTS', 'AST', 'REB']].corr()
         st.write(correlation_data)
 
-        # Visualize top players
         st.header('Top Players Visualization')
         st.bar_chart(top_10_players_pts.set_index('PLAYER_NAME')['PTS'])
 

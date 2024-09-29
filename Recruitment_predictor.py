@@ -8,7 +8,6 @@ def load_model():
         model = pickle.load(file)
     return model
 
-# Function to prepare input data for the model
 def prepare_input_data(age, gender, education_level, experience_years, previous_companies, distance_from_company, interview_score, skill_score, personality_score, recruitment_strategy):
     input_data = pd.DataFrame({
         'Age': [age],
@@ -24,7 +23,6 @@ def prepare_input_data(age, gender, education_level, experience_years, previous_
     })
     return input_data
 
-# Function to make a prediction
 def predict_hiring_decision(input_data):
     model = load_model()
     prediction = model.predict(input_data)

@@ -1,12 +1,9 @@
-/* style.css */
 
-/* General body style */
 body {
     background-color: #f5f5f5;
     font-family: 'Arial', sans-serif;
 }
 
-/* Sidebar customization */
 .sidebar .sidebar-content {
     background-color: #004466;
     color: white;
@@ -15,12 +12,10 @@ body {
     padding-right: 10px;
 }
 
-/* Sidebar title */
 .sidebar .sidebar-content h1 {
     color: #ffffff;
 }
 
-/* Button styling */
 .stButton>button {
     background-color: #007acc;
     color: white;
@@ -31,7 +26,6 @@ body {
     width: 100%;
 }
 
-/* Text input styling */
 .stTextInput>div>div>input {
     border: 1px solid #ccc;
     padding: 10px;
@@ -46,7 +40,6 @@ body {
     padding: 20px;
 }
 
-/* Container for logo and title */
 .logo-container {
     display: flex;
     align-items: center;
@@ -54,12 +47,12 @@ body {
 }
 
 .logo-container img {
-    width: 50px; /* Adjust size as needed */
+    width: 50px; 
     margin-right: 10px;
 }
 
 .logo-container h1 {
-    font-size: 24px; /* Adjust size as needed */
+    font-size: 24px; 
     margin: 0;
     color: white;
     font-weight: bold;
