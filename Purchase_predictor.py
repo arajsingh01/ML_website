@@ -4,10 +4,10 @@ import joblib
 
 def load_model_and_scaler():
     # Load the model using joblib
-    model = joblib.load('Purchase_iphone/model_joblib.joblib')
+    model = joblib.load('Purchase_iphone/model_pickle.pkl')
     
     # Load the scaler using joblib
-    scaler = joblib.load('Purchase_iphone/scaler_joblib.joblib')
+    scaler = joblib.load('Purchase_iphone/scaler.pkl')
     
     return model, scaler
 

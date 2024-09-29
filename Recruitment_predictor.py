@@ -5,8 +5,7 @@ import pandas as pd
 import joblib
 
 def load_model():
-    # Load the model using joblib
-    model = joblib.load('Recruitment/model.joblib')  # Ensure that the file extension is .joblib
+    model = joblib.load('Recruitment/model.pkl')
     return model
 
 def prepare_input_data(age, gender, education_level, experience_years, previous_companies, distance_from_company, interview_score, skill_score, personality_score, recruitment_strategy):
