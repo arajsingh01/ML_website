@@ -39,7 +39,7 @@ category = st.sidebar.selectbox(
 if category == "ML Model":
     model_choice = st.sidebar.selectbox(
         "Choose a Machine Learning Model",
-        ("NBA Player Trade Examiner", "Recruitment Predictor", "Purchase Predictor", "Social Media Impact Predictor")
+        ("NBA Player Trade Examiner", "Recruitment Predictor", "Iphone Purchase Predictor", "Social Media Impact Predictor")
     )
 
     if model_choice == "NBA Player Trade Examiner":
@@ -87,8 +87,8 @@ if category == "ML Model":
                 st.image(image2, use_column_width=True)
                 st.warning("The candidate is not likely to be hired.")
 
-    elif model_choice == "Purchase Predictor":
-        st.title("iPhone Purchase Prediction")
+    elif model_choice == "Iphone Purchase Predictor":
+        st.title("Iphone Purchase Prediction")
         gender = st.selectbox("Gender", ["Male", "Female"])
         age = st.slider("Age", min_value=19, max_value=60, step=1)
         salary = st.slider("Salary", min_value=10000, max_value=100000, step=1000)
