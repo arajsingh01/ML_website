@@ -4,7 +4,7 @@ import pandas as pd
 import joblib
 
 def load_model():
-    model = joblib.load('DarkSideOfSocialMedia/social_media_impact_model2.joblib')
+    model = joblib.load('DarksideOfSocialMedia/social_media_impact_model2.joblib')
     return model
 
 def predict_impact(input_data):
