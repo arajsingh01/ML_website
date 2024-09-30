@@ -32,10 +32,28 @@ st.sidebar.markdown(
 
 category = st.sidebar.selectbox(
     "Select a Category",
-    ("ML Model", "Data Analysis")
+    ("Home", "ML Model", "Data Analysis")
 )
 
-if category == "ML Model":
+if category == "Home":
+    st.title("Welcome to the Devcomm Platform")
+    st.write("Meet the team behind this platform:")
+    
+    col1, col2 = st.columns(2)
+
+    with col1:
+        image1 = Image.open("images/member1.jpg")
+        st.image(image1, caption="John Doe - Data Scientist", use_column_width=True)
+        st.write("John is an expert in machine learning and AI with a focus on predictive modeling.")
+
+    with col2:
+        image2 = Image.open("images/member2.jpg")
+        st.image(image2, caption="Jane Smith - Full Stack Developer", use_column_width=True)
+        st.write("Jane specializes in web development and backend integration for AI systems.")
+
+    st.write("Explore our various models and data analysis tools using the sidebar.")
+
+elif category == "ML Model":
     model_choice = st.sidebar.selectbox(
         "Choose a Machine Learning Model",
         ("NBA Player Trade Examiner", "Recruitment Predictor", "Iphone Purchase Predictor", "Social Media Impact Predictor")
@@ -155,51 +173,48 @@ elif category == "Data Analysis":
             df = df.drop(columns=['TIDAL Popularity'])
             return df
 
-        st.title('Spotify Top Streamed Songs (2024)')
-        df = load_data()
+        st.title('Spotify Data Analysis')
+        spotify_data = load_data()
+        st.dataframe(spotify_data)
 
-        st.header('Dataset Overview')
-        st.write(df.head())
+        chart_choice = st.selectbox("Choose a chart to visualize:", ["Bar Chart", "Line Chart", "Scatter Plot"])
 
-        st.header('Top 10 Songs by Spotify Streams')
-        top_10_songs = df[['Track', 'Artist', 'Spotify Streams']].sort_values(by='Spotify Streams', ascending=False).head(10)
-        st.write(top_10_songs)
+        if chart_choice == "Bar Chart":
+            st.subheader("Top 10 Songs by Spotify Streams")
+            top_10_songs = spotify_data.nlargest(10, "Spotify Streams")
+            st.bar_chart(data=top_10_songs, x='Track Name', y='Spotify Streams')
 
-        st.header('Correlation between Streams, Popularity, and Playlist Count')
-        correlation_data = df[['Spotify Streams', 'Spotify Popularity', 'Spotify Playlist Count']].corr()
-        st.write(correlation_data)
+        elif chart_choice == "Line Chart":
+            st.subheader("Spotify Streams Over Time")
+            st.line_chart(data=spotify_data, x='Release Date', y='Spotify Streams')
 
-        st.header('YouTube Views vs TikTok Engagement')
-        st.write(df[['YouTube Views', 'TikTok Views', 'TikTok Likes']].describe())
+        elif chart_choice == "Scatter Plot":
+            st.subheader("Spotify Streams vs YouTube Views")
+            st.scatter_chart(data=spotify_data, x='YouTube Views', y='Spotify Streams')
 
-        st.header('Visualizations')
-        st.bar_chart(top_10_songs.set_index('Track')['Spotify Streams'])
-
-        st.write("Data Source: Most Streamed Spotify Songs of 2024")
-    
     elif dataset_choice == "NBA Player Stats":
         @st.cache_data
         def load_nba_data():
-            return pd.read_csv('NBAFiles/final_data.csv')
-        
-        st.title('NBA Player Performance Analysis')
-        df = load_nba_data()
+            df = pd.read_csv('NBAFiles/players_stats_by_season_full_details.csv')
+            return df
 
-        st.header('Dataset Overview')
-        st.write(df.head())
+        st.title('NBA Player Stats Analysis')
+        nba_data = load_nba_data()
+        st.dataframe(nba_data)
 
-        st.header('Player Statistics Overview')
-        st.write(df.describe())
+        # Basic bar chart example for NBA players
+        chart_choice = st.selectbox("Choose a chart to visualize:", ["Bar Chart", "Line Chart", "Scatter Plot"])
 
-        st.header('Top 10 Players by Points')
-        top_10_players_pts = df[['PLAYER_NAME', 'PTS']].sort_values(by='PTS', ascending=False).head(10)
-        st.write(top_10_players_pts)
+        if chart_choice == "Bar Chart":
+            st.subheader("Top 10 Players by Points")
+            top_10_players = nba_data.nlargest(10, "Points")
+            st.bar_chart(data=top_10_players, x='Player Name', y='Points')
 
-        st.header('Correlation between Points, Assists, and Rebounds')
-        correlation_data = df[['PTS', 'AST', 'REB']].corr()
-        st.write(correlation_data)
+        elif chart_choice == "Line Chart":
+            st.subheader("Points Over Time for Top 10 Players")
+            top_10_players = nba_data.nlargest(10, "Points")
+            st.line_chart(data=top_10_players, x='Season', y='Points')
 
-        st.header('Top Players Visualization')
-        st.bar_chart(top_10_players_pts.set_index('PLAYER_NAME')['PTS'])
-
-        st.write("Data Source: NBA Player Stats")
+        elif chart_choice == "Scatter Plot":
+            st.subheader("Points vs Assists for NBA Players")
+            st.scatter_chart(data=nba_data, x='Assists', y='Points')
