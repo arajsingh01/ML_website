@@ -198,7 +198,7 @@ elif category == "Data Analysis":
     elif dataset_choice == "NBA Player Stats":
         @st.cache_data
         def load_nba_data():
-            df = pd.read_csv('NBAFiles/players_stats_by_season_full_details.csv')
+            df = pd.read_csv('NBAFiles/final_data.csv')
             return df
 
         st.title('NBA Player Stats Analysis')
