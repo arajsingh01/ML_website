@@ -198,26 +198,21 @@ elif category == "Data Analysis":
     elif dataset_choice == "NBA Player Stats":
         @st.cache_data
         def load_nba_data():
-            df = pd.read_csv('NBAFiles/final_data.csv')
-            return df
+            return pd.read_csv('NBAFiles/final_data.csv')
+        
+        st.title('NBA Player Performance Analysis')
+        df = load_nba_data()
 
-        st.title('NBA Player Stats Analysis')
-        nba_data = load_nba_data()
-        st.dataframe(nba_data)
+        st.header('Dataset Overview')
+        st.write(df.head())
 
-        # Basic bar chart example for NBA players
-        chart_choice = st.selectbox("Choose a chart to visualize:", ["Bar Chart", "Line Chart", "Scatter Plot"])
+        st.header('Player Statistics Overview')
+        st.write(df.describe())
 
-        if chart_choice == "Bar Chart":
-            st.subheader("Top 10 Players by Points")
-            top_10_players = nba_data.nlargest(10, "Points")
-            st.bar_chart(data=top_10_players, x='Player Name', y='Points')
+        st.header('Top 10 Players by Points')
+        top_10_players_pts = df[['PLAYER_NAME', 'PTS']].sort_values(by='PTS', ascending=False).head(10)
+        st.write(top_10_players_pts)
 
-        elif chart_choice == "Line Chart":
-            st.subheader("Points Over Time for Top 10 Players")
-            top_10_players = nba_data.nlargest(10, "Points")
-            st.line_chart(data=top_10_players, x='Season', y='Points')
-
-        elif chart_choice == "Scatter Plot":
-            st.subheader("Points vs Assists for NBA Players")
-            st.scatter_chart(data=nba_data, x='Assists', y='Points')
+        st.header('Correlation between Points, Assists, and Rebounds')
+        correlation_data = df[['PTS', 'AST', 'REB']].corr()
+        st.write(correlation_data)
