@@ -42,12 +42,12 @@ if category == "Home":
     col1, col2 = st.columns(2)
 
     with col1:
-        image1 = Image.open("images/member1.jpg")
+        image1 = Image.open("profileimg/nikunj.jpeg")
         st.image(image1, caption="John Doe - Data Scientist", use_column_width=True)
         st.write("John is an expert in machine learning and AI with a focus on predictive modeling.")
 
     with col2:
-        image2 = Image.open("images/member2.jpg")
+        image2 = Image.open("profileimg/Dhruv_Bhardwaj.jpg")
         st.image(image2, caption="Jane Smith - Full Stack Developer", use_column_width=True)
         st.write("Jane specializes in web development and backend integration for AI systems.")
 
@@ -173,25 +173,28 @@ elif category == "Data Analysis":
             df = df.drop(columns=['TIDAL Popularity'])
             return df
 
-        st.title('Spotify Data Analysis')
-        spotify_data = load_data()
-        st.dataframe(spotify_data)
+        st.title('Spotify Top Streamed Songs (2024)')
+        df = load_data()
 
-        chart_choice = st.selectbox("Choose a chart to visualize:", ["Bar Chart", "Line Chart", "Scatter Plot"])
+        st.header('Dataset Overview')
+        st.write(df.head())
 
-        if chart_choice == "Bar Chart":
-            st.subheader("Top 10 Songs by Spotify Streams")
-            top_10_songs = spotify_data.nlargest(10, "Spotify Streams")
-            st.bar_chart(data=top_10_songs, x='Track Name', y='Spotify Streams')
+        st.header('Top 10 Songs by Spotify Streams')
+        top_10_songs = df[['Track', 'Artist', 'Spotify Streams']].sort_values(by='Spotify Streams', ascending=False).head(10)
+        st.write(top_10_songs)
 
-        elif chart_choice == "Line Chart":
-            st.subheader("Spotify Streams Over Time")
-            st.line_chart(data=spotify_data, x='Release Date', y='Spotify Streams')
+        st.header('Correlation between Streams, Popularity, and Playlist Count')
+        correlation_data = df[['Spotify Streams', 'Spotify Popularity', 'Spotify Playlist Count']].corr()
+        st.write(correlation_data)
 
-        elif chart_choice == "Scatter Plot":
-            st.subheader("Spotify Streams vs YouTube Views")
-            st.scatter_chart(data=spotify_data, x='YouTube Views', y='Spotify Streams')
+        st.header('YouTube Views vs TikTok Engagement')
+        st.write(df[['YouTube Views', 'TikTok Views', 'TikTok Likes']].describe())
 
+        st.header('Visualizations')
+        st.bar_chart(top_10_songs.set_index('Track')['Spotify Streams'])
+
+        st.write("Data Source: Most Streamed Spotify Songs of 2024")
+    
     elif dataset_choice == "NBA Player Stats":
         @st.cache_data
         def load_nba_data():
