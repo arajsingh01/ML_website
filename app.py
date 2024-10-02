@@ -59,7 +59,7 @@ if category == "Home":
     col1, col2 = st.columns(2)
 
     with col1:
-        image1 = resize_image("profileimg/Rashid Siddiqui.png", 400, 400)
+        image1 = resize_image("profileimg/Rashid Siddiqui.png", 400, 450)
         st.image(image1)
         st.markdown(
             """
@@ -83,7 +83,7 @@ if category == "Home":
         )
 
     with col2:
-        image2 = resize_image("profileimg/Ishita Srivasava.jpg", 400, 400)
+        image2 = resize_image("profileimg/Ishita Srivasava.jpg", 400, 450)
         st.image(image2)
         st.markdown(
             """
@@ -109,7 +109,7 @@ if category == "Home":
     col3, col4 = st.columns(2)
 
     with col3:
-        image3 = resize_image("profileimg/aditya.jpeg", 400, 400)
+        image3 = resize_image("profileimg/aditya.jpeg", 400, 450)
         st.image(image3)
         st.markdown(
             """
@@ -132,7 +132,7 @@ if category == "Home":
         )
 
     with col4:
-        image4 = resize_image("profileimg/Dhruv_Bhardwaj.jpg", 400, 400)
+        image4 = resize_image("profileimg/Dhruv_Bhardwaj.jpg", 400, 450)
         st.image(image4)
         st.markdown(
             """
@@ -158,7 +158,7 @@ if category == "Home":
     col5, col6 = st.columns(2)
 
     with col5:
-        image5 = resize_image("profileimg/nikunj.jpeg", 400, 400)
+        image5 = resize_image("profileimg/nikunj.jpeg", 400, 450)
         st.image(image5)
         st.markdown(
             """
@@ -181,7 +181,7 @@ if category == "Home":
         )
 
     with col6:
-        image6 = resize_image("profileimg/Suryansh Malhotra. Jpg.jpg", 400, 400)
+        image6 = resize_image("profileimg/Suryansh Malhotra. Jpg.jpg", 400, 450)
         st.image(image6)
         st.markdown(
             """
