@@ -349,20 +349,53 @@ elif category == "Data Analysis":
         @st.cache_data
         def load_nba_data():
             return pd.read_csv('NBAFiles/final_data.csv')
-        
+
+        # Load the data
         st.title('NBA Player Performance Analysis')
         df = load_nba_data()
 
+        # Dataset Overview
         st.header('Dataset Overview')
         st.write(df.head())
 
-        st.header('Player Statistics Overview')
-        st.write(df.describe())
+        # 4. Top Players by Efficiency (Field Goal %, 3-Point %, and Defensive Rating)
+        st.header('Top Players by Efficiency')
+        efficiency_players = df[['PLAYER_NAME', 'FG_PCT', 'FG3M', 'FG3A', 'DEF_RATING_RANK']].copy()
+        efficiency_players['3P_PCT'] = efficiency_players['FG3M'] / efficiency_players['FG3A']
+        top_efficiency_players = efficiency_players.sort_values(by=['FG_PCT', '3P_PCT'], ascending=False).head(10)
 
-        st.header('Top 10 Players by Points')
-        top_10_players_pts = df[['PLAYER_NAME', 'PTS']].sort_values(by='PTS', ascending=False).head(10)
-        st.write(top_10_players_pts)
+        st.write(top_efficiency_players)
 
-        st.header('Correlation between Points, Assists, and Rebounds')
-        correlation_data = df[['PTS', 'AST', 'REB']].corr()
-        st.write(correlation_data)
+        # 1. Home vs Away Performance Comparison
+        st.header('Home vs. Away Performance Comparison')
+        home_away_performance = df.groupby(['LOCATION', 'PLAYER_NAME']).agg({
+            'PTS': 'mean', 'AST': 'mean', 'REB': 'mean', 'FG_PCT': 'mean'
+        }).reset_index()
+
+        home_performance = home_away_performance[home_away_performance['LOCATION'] == 'HOME']
+        away_performance = home_away_performance[home_away_performance['LOCATION'] == 'AWAY']
+
+        st.subheader('Home Performance')
+        st.write(home_performance.sort_values(by='PTS', ascending=False).head(10))
+
+        st.subheader('Away Performance')
+        st.write(away_performance.sort_values(by='PTS', ascending=False).head(10))
+
+        # 2. Team Performance Analysis
+        st.header('Team Performance Analysis')
+        team_performance = df.groupby('TEAM_NAME_x').agg({
+            'PTS': 'mean', 'AST': 'mean', 'REB': 'mean', 'DEF_RATING_RANK': 'mean'
+        }).reset_index()
+
+        st.write(team_performance.sort_values(by='PTS', ascending=False).head(10))
+
+        # 5. Player Consistency Analysis
+        st.header('Player Consistency Analysis (Variance in Points, Assists, Rebounds)')
+        player_consistency = df.groupby('PLAYER_NAME').agg({
+            'PTS': 'var', 'AST': 'var', 'REB': 'var'
+        }).reset_index()
+
+        player_consistency.columns = ['PLAYER_NAME', 'PTS_VARIANCE', 'AST_VARIANCE', 'REB_VARIANCE']
+        top_consistent_players = player_consistency.sort_values(by=['PTS_VARIANCE', 'AST_VARIANCE', 'REB_VARIANCE']).head(10)
+
+        st.write(top_consistent_players)

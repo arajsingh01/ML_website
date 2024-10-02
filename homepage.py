@@ -7,7 +7,6 @@ def resize_image(image_path, width, height):
     resized_img = img.resize((width, height))
     return resized_img
 
-
 st.set_page_config(page_title="DevComm ML Project", layout="wide")
 
 st.title("Welcome to DevComm ML Nexus")
@@ -23,16 +22,10 @@ So go ahead, explore, learn, and most importantly, have fun! 🎉 Happy Learning
 """)
 
 st.write("## Explore the Project")
-st.write("Select a section to learn more about our work:")
 
-if st.button("View ML Models"):
-    st.write("Redirecting to ML Models page...")
+st.write("Click on the page named App in sidebar to access the main application.")
 
-if st.button("Data Analysis Projects"):
-    st.write("Redirecting to Data Analysis page...")
 
-if st.button("Meet the Team"):
-    st.write("Redirecting to Team page...")
 
 st.write("## Project Goals")
 st.write("""
