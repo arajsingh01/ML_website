@@ -22,37 +22,191 @@ img_str = base64.b64encode(buffered.getvalue()).decode()
 
 st.sidebar.markdown(
     f"""
-    <div class="logo-container">
+    <div class="logo-container" style="text-align: center;">
         <img src="data:image/png;base64,{img_str}" alt="Logo" style="width:50px; margin-right:10px;">
         <h1 style="display:inline; vertical-align: middle;">Devcomm</h1>
     </div>
+    </br>
+    <div>
+        <h1 style="display:inline; vertical-align: middle;">Devcomm ML Nexus</h1>
+    </div>
+    </br>
     """,
     unsafe_allow_html=True
 )
 
 category = st.sidebar.selectbox(
-    "Select a Category",
+    "Select",
     ("Home", "ML Model", "Data Analysis")
 )
 
+# Function to resize images
+def resize_image(image_path, width, height):
+    img = Image.open(image_path)
+    resized_img = img.resize((width, height))
+    return resized_img
+
 if category == "Home":
-    st.title("Welcome to the Devcomm Platform")
-    st.write("Meet the team behind this platform:")
-    
+    st.title("MEET OUR TEAM")
+    st.write('"A dedicated group of innovators driving the group forward"')
+
+    # Mentors Section
+    st.header("Mentors")
     col1, col2 = st.columns(2)
 
     with col1:
-        image1 = Image.open("profileimg/nikunj.jpeg")
-        st.image(image1, caption="John Doe - Data Scientist", use_column_width=True)
-        st.write("John is an expert in machine learning and AI with a focus on predictive modeling.")
+        image1 = resize_image("profileimg/Rashid Siddiqui.png", 400, 400)
+        st.image(image1)
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h3>Rashid Siddiqui</h3>
+                <p>ML Head, DevComm</p>
+            </div>
+            """, unsafe_allow_html=True)
+        linkedin_url = "https://www.linkedin.com/in/rashid-siddiqui2004/"
+        linkedin_icon = "profileimg/icon.png"
+        # Encode and show LinkedIn icon
+        with open(linkedin_icon, "rb") as image_file:
+            encoded_icon = base64.b64encode(image_file.read()).decode()
+        st.markdown(
+            f"""
+            <div style="text-align: center;">
+                <a href="{linkedin_url}" target="_blank">
+                    <img src="data:image/png;base64,{encoded_icon}" alt="LinkedIn Icon" style="width:30px; height:30px;">
+                </a>
+            </div>
+            """, unsafe_allow_html=True
+        )
 
     with col2:
-        image2 = Image.open("profileimg/Dhruv_Bhardwaj.jpg")
-        st.image(image2, caption="Jane Smith - Full Stack Developer", use_column_width=True)
-        st.write("Jane specializes in web development and backend integration for AI systems.")
+        image2 = resize_image("profileimg/Ishita Srivasava.jpg", 400, 400)
+        st.image(image2)
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h3>Ishita Srivastava</h3>
+                <p>ML Head, DevComm</p>
+            </div>
+            """, unsafe_allow_html=True)
+        linkedin_url = "https://www.linkedin.com/in/ishita-srivastava-313b27264/"
+        # Encode and show LinkedIn icon
+        with open(linkedin_icon, "rb") as image_file:
+            encoded_icon = base64.b64encode(image_file.read()).decode()
+        st.markdown(
+            f"""
+            <div style="text-align: center;">
+                <a href="{linkedin_url}" target="_blank">
+                    <img src="data:image/png;base64,{encoded_icon}" alt="LinkedIn Icon" style="width:30px; height:30px;">
+                </a>
+            </div>
+            """, unsafe_allow_html=True
+        )
 
-    st.write("Explore our various models and data analysis tools using the sidebar.")
+    # Development Team Section
+    st.header("Development Team")
+    col3, col4 = st.columns(2)
 
+    with col3:
+        image3 = resize_image("profileimg/aditya.jpeg", 400, 400)
+        st.image(image3)
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h3>Aditya Raj Singh</h3>
+                <p>JC, ML Department</p>
+            </div>
+            """, unsafe_allow_html=True)
+        linkedin_url = "https://www.linkedin.com/in/aditya-raj-singh-4134262a6/"
+        # Encode and show LinkedIn icon
+        with open(linkedin_icon, "rb") as image_file:
+            encoded_icon = base64.b64encode(image_file.read()).decode()
+        st.markdown(
+            f"""
+            <div style="text-align: center;">
+                <a href="{linkedin_url}" target="_blank">
+                    <img src="data:image/png;base64,{encoded_icon}" alt="LinkedIn Icon" style="width:30px; height:30px;">
+                </a>
+            </div>
+            """, unsafe_allow_html=True
+        )
+
+    with col4:
+        image4 = resize_image("profileimg/Dhruv_Bhardwaj.jpg", 400, 400)
+        st.image(image4)
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h3>Dhruv Bhardwaj</h3>
+                <p>JC, ML Department</p>
+            </div>
+            """, unsafe_allow_html=True)
+        linkedin_url = "https://www.linkedin.com/in/dhruv-bhardwaj-a422481b1"
+        # Encode and show LinkedIn icon
+        with open(linkedin_icon, "rb") as image_file:
+            encoded_icon = base64.b64encode(image_file.read()).decode()
+        st.markdown(
+            f"""
+            <div style="text-align: center;">
+                <a href="{linkedin_url}" target="_blank">
+                    <img src="data:image/png;base64,{encoded_icon}" alt="LinkedIn Icon" style="width:30px; height:30px;">
+                </a>
+            </div>
+            """, unsafe_allow_html=True
+        )
+
+    # ML Team Members Section
+    st.header("ML Team Members")
+    col5, col6 = st.columns(2)
+
+    with col5:
+        image5 = resize_image("profileimg/nikunj.jpeg", 400, 400)
+        st.image(image5)
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h3>Nikunj Kumar</h3>
+                <p>JC, ML Department</p>
+            </div>
+            """, unsafe_allow_html=True)
+        linkedin_url = "https://www.linkedin.com/in/nikunjkumar1405/"
+        # Encode and show LinkedIn icon
+        with open(linkedin_icon, "rb") as image_file:
+            encoded_icon = base64.b64encode(image_file.read()).decode()
+        st.markdown(
+            f"""
+            <div style="text-align: center;">
+                <a href="{linkedin_url}" target="_blank">
+                    <img src="data:image/png;base64,{encoded_icon}" alt="LinkedIn Icon" style="width:30px; height:30px;">
+                </a>
+            </div>
+            """, unsafe_allow_html=True
+        )
+
+    with col6:
+        image6 = resize_image("profileimg/Suryansh Malhotra. Jpg.jpg", 400, 400)
+        st.image(image6)
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h3>Suryansh Malhotra</h3>
+                <p>JC, ML Department</p>
+            </div>
+            """, unsafe_allow_html=True)
+        linkedin_url = "https://www.linkedin.com/in/suryansh-malhotra-864a601b9"
+        # Encode and show LinkedIn icon
+        with open(linkedin_icon, "rb") as image_file:
+            encoded_icon = base64.b64encode(image_file.read()).decode()
+        st.markdown(
+            f"""
+            <div style="text-align: center;">
+                <a href="{linkedin_url}" target="_blank">
+                    <img src="data:image/png;base64,{encoded_icon}" alt="LinkedIn Icon" style="width:30px; height:30px;">
+                </a>
+            </div>
+            """, unsafe_allow_html=True
+        )
+        
 elif category == "ML Model":
     model_choice = st.sidebar.selectbox(
         "Choose a Machine Learning Model",
