@@ -40,17 +40,21 @@ category = st.sidebar.selectbox(
     ("Home", "ML Model", "Data Analysis")
 )
 
-# Function to resize images
 def resize_image(image_path, width, height):
     img = Image.open(image_path)
     resized_img = img.resize((width, height))
     return resized_img
 
 if category == "Home":
-    st.title("MEET OUR TEAM")
-    st.write('"A dedicated group of innovators driving the group forward"')
+    st.markdown(
+        """
+        <div style="text-align: center;">
+            <h1>MEET OUR TEAM</h1>
+            <p><i>"A dedicated group of innovators driving the group forward"</i></p>
+        </div>
+        """, unsafe_allow_html=True
+    )
 
-    # Mentors Section
     st.header("Mentors")
     col1, col2 = st.columns(2)
 
@@ -66,7 +70,6 @@ if category == "Home":
             """, unsafe_allow_html=True)
         linkedin_url = "https://www.linkedin.com/in/rashid-siddiqui2004/"
         linkedin_icon = "profileimg/icon.png"
-        # Encode and show LinkedIn icon
         with open(linkedin_icon, "rb") as image_file:
             encoded_icon = base64.b64encode(image_file.read()).decode()
         st.markdown(
@@ -90,7 +93,6 @@ if category == "Home":
             </div>
             """, unsafe_allow_html=True)
         linkedin_url = "https://www.linkedin.com/in/ishita-srivastava-313b27264/"
-        # Encode and show LinkedIn icon
         with open(linkedin_icon, "rb") as image_file:
             encoded_icon = base64.b64encode(image_file.read()).decode()
         st.markdown(
@@ -103,7 +105,6 @@ if category == "Home":
             """, unsafe_allow_html=True
         )
 
-    # Development Team Section
     st.header("Development Team")
     col3, col4 = st.columns(2)
 
@@ -118,7 +119,6 @@ if category == "Home":
             </div>
             """, unsafe_allow_html=True)
         linkedin_url = "https://www.linkedin.com/in/aditya-raj-singh-4134262a6/"
-        # Encode and show LinkedIn icon
         with open(linkedin_icon, "rb") as image_file:
             encoded_icon = base64.b64encode(image_file.read()).decode()
         st.markdown(
@@ -142,7 +142,6 @@ if category == "Home":
             </div>
             """, unsafe_allow_html=True)
         linkedin_url = "https://www.linkedin.com/in/dhruv-bhardwaj-a422481b1"
-        # Encode and show LinkedIn icon
         with open(linkedin_icon, "rb") as image_file:
             encoded_icon = base64.b64encode(image_file.read()).decode()
         st.markdown(
@@ -155,7 +154,6 @@ if category == "Home":
             """, unsafe_allow_html=True
         )
 
-    # ML Team Members Section
     st.header("ML Team Members")
     col5, col6 = st.columns(2)
 
@@ -170,7 +168,6 @@ if category == "Home":
             </div>
             """, unsafe_allow_html=True)
         linkedin_url = "https://www.linkedin.com/in/nikunjkumar1405/"
-        # Encode and show LinkedIn icon
         with open(linkedin_icon, "rb") as image_file:
             encoded_icon = base64.b64encode(image_file.read()).decode()
         st.markdown(
@@ -194,7 +191,6 @@ if category == "Home":
             </div>
             """, unsafe_allow_html=True)
         linkedin_url = "https://www.linkedin.com/in/suryansh-malhotra-864a601b9"
-        # Encode and show LinkedIn icon
         with open(linkedin_icon, "rb") as image_file:
             encoded_icon = base64.b64encode(image_file.read()).decode()
         st.markdown(
