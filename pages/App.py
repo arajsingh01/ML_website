@@ -405,15 +405,11 @@ elif category == "Data Analysis":
         @st.cache_data
         def load_data():
             try:
-            # Try reading the CSV file with 'utf-8' encoding first
+                # Try reading the CSV file with 'utf-8' encoding first
                 return pd.read_csv('Youtube Analytics/Global Youtube Statistics.csv', encoding='utf-8')
             except UnicodeDecodeError:
-                try:
-                    # If utf-8 fails, try reading with 'ISO-8859-1' (Latin-1) encoding
-                    return pd.read_csv('Youtube Analytics/Global Youtube Statistics.csv', encoding='ISO-8859-1')
-                except UnicodeDecodeError:
-                    # If both fail, try 'utf-16' encoding
-                    return pd.read_csv('Youtube Analytics/Global Youtube Statistics.csv', encoding='utf-16')
+                # If utf-8 fails, try reading with 'ISO-8859-1' (Latin-1) encoding
+                return pd.read_csv('Youtube Analytics/Global Youtube Statistics.csv', encoding='ISO-8859-1')
 
         df = load_data()
 
