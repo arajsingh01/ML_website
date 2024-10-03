@@ -290,7 +290,7 @@ if category == "Home":
 elif category == "ML Model":
     model_choice = st.sidebar.selectbox(
         "Choose a Machine Learning Model",
-        ("NBA Player Trade Examiner", "Recruitment Predictor", "Iphone Purchase Predictor", "Social Media Impact Predictor")
+        ( "Recruitment Predictor","NBA Player Trade Examiner", "Iphone Purchase Predictor", "Social Media Impact Predictor")
     )
 
     if model_choice == "NBA Player Trade Examiner":

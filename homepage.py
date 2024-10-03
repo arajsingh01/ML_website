@@ -78,7 +78,7 @@ st.markdown(
     """
     <div class="container">
         <div class="footer">
-            <p>© 2024 DevComm Tech Society. All Rights Reserved.</p>
+            <p>© 2024 DevComm. All Rights Reserved.</p>
             <p>Made with ❤️ using Streamlit</p>
         </div>
         <div class="contact">
