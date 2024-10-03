@@ -83,7 +83,7 @@ st.markdown(
         </div>
         <div class="contact">
             <h3 style="color:black;">🌐 Connect with Us</h3>
-            <p>
+            <p style="color:black;">
                 Follow us on our social platforms: <br>
                 <a href="https://www.linkedin.com/company/devcommnsut/" target="_blank" class="linkedin">LinkedIn</a> |
                 <a href="https://www.instagram.com/devcomm.nsut/" target="_blank" class="instagram">Instagram</a>
