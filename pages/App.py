@@ -7,6 +7,7 @@ from NBA_Predictor import predict_trade
 from Recruitment_predictor import prepare_input_data, predict_hiring_decision
 from Purchase_predictor import predict_purchase
 from social_media import predict_impact
+import matplotlib.pyplot as plt
 
 def load_css(file_name):
     with open(file_name) as f:
@@ -307,7 +308,7 @@ elif category == "Data Analysis":
 
     dataset_choice = st.sidebar.selectbox(
         "Choose a dataset",
-        ("Spotify","NBA Player Stats")
+        ("Spotify","NBA Player Stats","Youtube Analytics")
     )
 
     if dataset_choice == "Spotify":
@@ -399,3 +400,96 @@ elif category == "Data Analysis":
         top_consistent_players = player_consistency.sort_values(by=['PTS_VARIANCE', 'AST_VARIANCE', 'REB_VARIANCE']).head(10)
 
         st.write(top_consistent_players)
+
+    elif dataset_choice == "Youtube Analytics":
+        @st.cache_data
+        def load_data():
+            try:
+            # Try reading the CSV file with 'utf-8' encoding first
+                return pd.read_csv('Youtube Analytics/Global Youtube Statistics.csv', encoding='utf-8')
+            except UnicodeDecodeError:
+                try:
+                    # If utf-8 fails, try reading with 'ISO-8859-1' (Latin-1) encoding
+                    return pd.read_csv('Youtube Analytics/Global Youtube Statistics.csv', encoding='ISO-8859-1')
+                except UnicodeDecodeError:
+                    # If both fail, try 'utf-16' encoding
+                    return pd.read_csv('Youtube Analytics/Global Youtube Statistics.csv', encoding='utf-16')
+
+        df = load_data()
+
+        # Check if the necessary columns exist in the dataset to avoid errors
+        st.header('Top 10 YouTubers by Subscribers')
+        top_youtubers = df[['Youtuber', 'subscribers']].sort_values(by='subscribers', ascending=False).head(10)
+        st.write(top_youtubers)
+
+        # 2. Correlation Between Subscribers, Video Views, and Earnings
+        st.header('Correlation Between Subscribers, Video Views, and Earnings')
+        correlation_data = df[['subscribers', 'video views', 'lowest_yearly_earnings', 'highest_yearly_earnings']].corr()
+        st.write(correlation_data)
+
+        # 3. Top 10 Countries by Total YouTube Views
+        st.header('Top 10 Countries by Total YouTube Views')
+        top_countries = df.groupby('Country')['video views'].sum().sort_values(ascending=False).head(10)
+        st.write(top_countries)
+
+        # 5. Category-wise Average Subscribers
+        st.header('Average Subscribers by Video Category')
+        category_avg_subscribers = df.groupby('category')['subscribers'].mean().sort_values(ascending=False)
+        st.write(category_avg_subscribers)
+
+        # 6. Viewer Engagement Analysis (Subscribers vs Video Views)
+        st.header('Viewer Engagement Analysis (Subscribers vs Video Views)')
+        df['Views_to_Subscribers'] = df['video views'] / df['subscribers']
+        engagement_data = df[['Youtuber', 'Views_to_Subscribers']].sort_values(by='Views_to_Subscribers', ascending=False).head(10)
+        st.write(engagement_data)
+
+        # 8. Distribution of Channel Types (Pie Chart)
+        st.header('Distribution of Channel Types')
+
+        # Get the channel type distribution
+        channel_type_distribution = df['channel_type'].value_counts(dropna=False)
+
+        # Calculate the total and percentage
+        total = channel_type_distribution.sum()
+        channel_type_distribution_percent = (channel_type_distribution / total) * 100
+
+        # Group categories with less than 3% into 'Other'
+        other_threshold = 3
+        small_categories = channel_type_distribution_percent[channel_type_distribution_percent < other_threshold].index
+        channel_type_distribution_grouped = channel_type_distribution.copy()
+
+        channel_type_distribution_grouped.loc[small_categories] = 'Other'
+        channel_type_distribution_grouped = channel_type_distribution_grouped.value_counts()
+
+        # Plot pie chart
+        fig, ax = plt.subplots()
+        ax.pie(channel_type_distribution_grouped, labels=channel_type_distribution_grouped.index, autopct='%1.1f%%', startangle=90)
+        ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+        # Display the pie chart in Streamlit
+        st.pyplot(fig)
+
+        # 9. Distribution of YouTube Channels by Country (Pie Chart)
+        st.header('Distribution of YouTube Channels by Country')
+
+        # Count the number of channels by country
+        country_distribution = df['Country'].value_counts(dropna=False)
+
+        # Calculate total number of channels
+        total_channels = country_distribution.sum()
+
+        # Create a threshold for categorizing smaller countries as "Others"
+        threshold = 0.02  # 2%
+        small_countries = country_distribution[country_distribution / total_channels < threshold]
+
+        # Aggregate small countries into "Others"
+        if not small_countries.empty:
+            others_count = small_countries.sum()
+            country_distribution = country_distribution[country_distribution / total_channels >= threshold]
+            country_distribution['Others'] = others_count
+
+        # Plot the pie chart
+        fig2, ax2 = plt.subplots()
+        ax2.pie(country_distribution, labels=country_distribution.index, autopct='%1.1f%%', startangle=90)
+        ax2.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+        st.pyplot(fig2)

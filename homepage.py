@@ -82,7 +82,7 @@ st.markdown(
             <p>Made with ❤️ using Streamlit</p>
         </div>
         <div class="contact">
-            <h3>🌐 Connect with Us</h3>
+            <h3 style="color:black;">🌐 Connect with Us</h3>
             <p>
                 Follow us on our social platforms: <br>
                 <a href="https://www.linkedin.com/company/devcommnsut/" target="_blank" class="linkedin">LinkedIn</a> |
