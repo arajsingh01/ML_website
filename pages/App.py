@@ -524,28 +524,10 @@ elif category == "Data Analysis":
 
         # 8. Distribution of Channel Types (Pie Chart)
         st.header('Distribution of Channel Types')
-
-        # Get the channel type distribution
-        channel_type_distribution = df['channel_type'].value_counts(dropna=False)
-
-        # Calculate the total and percentage
-        total = channel_type_distribution.sum()
-        channel_type_distribution_percent = (channel_type_distribution / total) * 100
-
-        # Group categories with less than 3% into 'Other'
-        other_threshold = 3
-        small_categories = channel_type_distribution_percent[channel_type_distribution_percent < other_threshold].index
-        channel_type_distribution_grouped = channel_type_distribution.copy()
-
-        channel_type_distribution_grouped.loc[small_categories] = 'Other'
-        channel_type_distribution_grouped = channel_type_distribution_grouped.value_counts()
-
-        # Plot pie chart
+        channel_type_distribution = df['channel_type'].value_counts(dropna=False)  # Handle missing channel types
         fig, ax = plt.subplots()
-        ax.pie(channel_type_distribution_grouped, labels=channel_type_distribution_grouped.index, autopct='%1.1f%%', startangle=90)
+        ax.pie(channel_type_distribution, labels=channel_type_distribution.index, autopct='%1.1f%%', startangle=90)
         ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-
-        # Display the pie chart in Streamlit
         st.pyplot(fig)
 
         # 9. Distribution of YouTube Channels by Country (Pie Chart)
