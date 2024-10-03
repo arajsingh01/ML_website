@@ -406,10 +406,10 @@ elif category == "Data Analysis":
         def load_data():
             try:
                 # Try reading the CSV file with 'utf-8' encoding first
-                return pd.read_csv('Youtube Analytics/Global Youtube Statistics.csv', encoding='utf-8')
+                return pd.read_csv('Youtube Analytics/Global YouTube Statistics.csv', encoding='utf-8')
             except UnicodeDecodeError:
                 # If utf-8 fails, try reading with 'ISO-8859-1' (Latin-1) encoding
-                return pd.read_csv('Youtube Analytics/Global Youtube Statistics.csv', encoding='ISO-8859-1')
+                return pd.read_csv('Youtube Analytics/Global YouTube Statistics.csv', encoding='ISO-8859-1')
 
         df = load_data()
 
