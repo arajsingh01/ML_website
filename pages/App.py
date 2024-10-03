@@ -1,8 +1,8 @@
 import streamlit as st
 from PIL import Image
 import base64
-import pandas as pd
 import io
+import pandas as pd
 from NBA_Predictor import predict_trade
 from Recruitment_predictor import prepare_input_data, predict_hiring_decision
 from Purchase_predictor import predict_purchase
@@ -56,7 +56,16 @@ if category == "Home":
         """, unsafe_allow_html=True
     )
 
-    st.header("Mentors")
+    # Center the "Mentors" header
+    st.markdown(
+        """
+        <div style="text-align: center;">
+            </br>
+            <h2>Mentors</h2>
+        </div>
+        """, unsafe_allow_html=True
+    )
+
     col1, col2 = st.columns(2)
 
     with col1:
@@ -106,7 +115,17 @@ if category == "Home":
             """, unsafe_allow_html=True
         )
 
-    st.header("Development Team")
+    # Center the "Development Team" header
+    st.markdown(
+        """
+        <div style="text-align: center;">
+            </br>
+            </br>
+            <h2>Development Team</h2>
+        </div>
+        """, unsafe_allow_html=True
+    )
+
     col3, col4 = st.columns(2)
 
     with col3:
@@ -133,16 +152,16 @@ if category == "Home":
         )
 
     with col4:
-        image4 = resize_image("profileimg/Dhruv_Bhardwaj.jpg", 400, 450)
+        image4 = resize_image("profileimg/Aakansha.jpeg", 400, 450)
         st.image(image4)
         st.markdown(
             """
             <div style="text-align: center;">
-                <h3>Dhruv Bhardwaj</h3>
+                <h3>Aakansha Singh</h3>
                 <p>JC, ML Department</p>
             </div>
             """, unsafe_allow_html=True)
-        linkedin_url = "https://www.linkedin.com/in/dhruv-bhardwaj-a422481b1"
+        linkedin_url = "https://www.linkedin.com/in/aakanksha-75bba9310/"
         with open(linkedin_icon, "rb") as image_file:
             encoded_icon = base64.b64encode(image_file.read()).decode()
         st.markdown(
@@ -155,7 +174,17 @@ if category == "Home":
             """, unsafe_allow_html=True
         )
 
-    st.header("ML Team Members")
+    # Center the "ML Team Members" header
+    st.markdown(
+        """
+        <div style="text-align: center;">
+            </br>
+            </br>
+            <h2>ML Team Members</h2>
+        </div>
+        """, unsafe_allow_html=True
+    )
+
     col5, col6 = st.columns(2)
 
     with col5:
@@ -192,6 +221,60 @@ if category == "Home":
             </div>
             """, unsafe_allow_html=True)
         linkedin_url = "https://www.linkedin.com/in/suryansh-malhotra-864a601b9"
+        with open(linkedin_icon, "rb") as image_file:
+            encoded_icon = base64.b64encode(image_file.read()).decode()
+        st.markdown(
+            f"""
+            <div style="text-align: center;">
+                <a href="{linkedin_url}" target="_blank">
+                    <img src="data:image/png;base64,{encoded_icon}" alt="LinkedIn Icon" style="width:30px; height:30px;">
+                </a>
+            </div>
+            """, unsafe_allow_html=True
+        )
+
+    st.markdown(
+        """
+        <div style="text-align: center;">
+            </br>
+        </div>
+        """, unsafe_allow_html=True
+    )
+    col7, col8 = st.columns(2)
+
+    with col7:
+        image7 = resize_image("profileimg/Dhruv_Bhardwaj.jpg", 400, 450)
+        st.image(image7)
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h3>Dhruv Bhardwaj</h3>
+                <p>JC, ML Department</p>
+            </div>
+            """, unsafe_allow_html=True)
+        linkedin_url = "https://www.linkedin.com/in/dhruv-bhardwaj-a422481b1"
+        with open(linkedin_icon, "rb") as image_file:
+            encoded_icon = base64.b64encode(image_file.read()).decode()
+        st.markdown(
+            f"""
+            <div style="text-align: center;">
+                <a href="{linkedin_url}" target="_blank">
+                    <img src="data:image/png;base64,{encoded_icon}" alt="LinkedIn Icon" style="width:30px; height:30px;">
+                </a>
+            </div>
+            """, unsafe_allow_html=True
+        )
+    with col8:
+        image8 = resize_image("profileimg/naman batra.jpeg", 400, 450)
+        st.image(image8)
+        st.markdown(
+            """
+            <div style="text-align: center;">
+                <h3>Naman Batra</h3>
+                <p>JC, ML Department</p>
+            </div>
+            """, unsafe_allow_html=True)
+        linkedin_url = "https://www.linkedin.com/in/naman-batra-40a945287/"
         with open(linkedin_icon, "rb") as image_file:
             encoded_icon = base64.b64encode(image_file.read()).decode()
         st.markdown(
